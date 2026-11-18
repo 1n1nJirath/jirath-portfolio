@@ -147,7 +147,11 @@ export default function ContactFooter({ onOpenCv }) {
         {/* Bottom Copyright Strip */}
         <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-slate-200 pt-6 text-xs text-slate-500 sm:flex-row">
           <p>
-            © 2026 <span className="font-semibold text-slate-700">{personalInfo.name}</span>. {contact.footerNote}
+            © 2026{' '}
+            <span className="font-semibold text-slate-700">
+              {lang === 'th' ? personalInfo.thaiName : personalInfo.name}
+            </span>
+            . {contact.footerNote}
           </p>
           <p className="font-mono text-[11px] text-slate-400">
             {contact.footerBuild}

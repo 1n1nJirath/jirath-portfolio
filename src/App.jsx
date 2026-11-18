@@ -17,22 +17,24 @@ export default function App() {
   return (
     <LanguageProvider>
       <div className="min-h-screen bg-[#F8FAFC] text-[#0F172A]">
-        <Navbar onOpenCv={() => setCvModalOpen(true)} />
+        <div className="no-print">
+          <Navbar onOpenCv={() => setCvModalOpen(true)} />
 
-        <main>
-          <Hero />
-          <Competencies />
-          <CaseStudies onSelectStudy={(studyId) => setActiveStudyId(studyId)} />
-          <Leadership />
-          <EducationSkills />
-        </main>
+          <main>
+            <Hero />
+            <Competencies />
+            <CaseStudies onSelectStudy={(studyId) => setActiveStudyId(studyId)} />
+            <Leadership />
+            <EducationSkills />
+          </main>
 
-        <ContactFooter onOpenCv={() => setCvModalOpen(true)} />
+          <ContactFooter onOpenCv={() => setCvModalOpen(true)} />
 
-        <ArchitectureModal
-          studyId={activeStudyId}
-          onClose={() => setActiveStudyId(null)}
-        />
+          <ArchitectureModal
+            studyId={activeStudyId}
+            onClose={() => setActiveStudyId(null)}
+          />
+        </div>
 
         <CvModal
           open={cvModalOpen}

@@ -26,7 +26,7 @@ export default function Navbar({ onOpenCv }) {
           </span>
           <div className="flex flex-col">
             <span className="text-sm font-semibold tracking-tight text-slate-900">
-              {personalInfo.name}
+              {lang === 'th' ? personalInfo.thaiName : personalInfo.name}
             </span>
             <span className="font-mono text-[10px] font-medium text-slate-500 sm:text-[11px]">
               {content.nav.roleSubtitle}

@@ -1,6 +1,8 @@
 export const personalInfo = {
   name: 'Jirath Kanaraksanti',
-  thaiName: 'จิรัฏฐ์ คณารักษ์สันติ (Jirath Kanaraksanti)',
+  thaiName: 'จิรัฏฐ์ คณารักษ์สันติ',
+  cvFileNameEn: 'Jirath_Kanaraksanti_cv',
+  cvFileNameTh: 'จิรัฏฐ์_คณารักษ์สันติ_cv',
   initials: 'JK',
   email: 'thaithaiji@gmail.com',
   phone: '(+66) 97-056-0065',
