@@ -6,6 +6,14 @@ import { useLanguage } from '../context/LanguageContext'
 const DEFAULT_TITLE =
   'Jirath Kanaraksanti — System Analyst | Business Analyst | AI Workflow Architect'
 
+function SectionHeading({ children }) {
+  return (
+    <h2 className="border-l-[3px] border-[#0D9488] bg-slate-50 px-2.5 py-0.5 text-[11px] font-bold tracking-tight text-slate-900">
+      {children}
+    </h2>
+  )
+}
+
 export default function CvModal({ open, onClose }) {
   const { lang } = useLanguage()
   const content = portfolioContent[lang]
@@ -95,7 +103,7 @@ export default function CvModal({ open, onClose }) {
             className="mx-auto max-w-[210mm] rounded-xl border border-slate-200 bg-white p-5 text-slate-900 shadow-card sm:p-7"
           >
             {/* Header */}
-            <div className="border-b-2 border-slate-900 pb-2.5">
+            <header className="border-b-2 border-slate-900 pb-2.5">
               <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <h1 className="text-xl font-extrabold tracking-tight text-slate-900">
                   {lang === 'th' ? personalInfo.thaiName : personalInfo.name}
@@ -105,129 +113,145 @@ export default function CvModal({ open, onClose }) {
                 </span>
               </div>
               <p className="mt-0.5 text-xs font-bold text-[#0D9488]">
-                {content.hero.headline}
+                {cv.roleLine}
               </p>
-              <div className="mt-1.5 flex flex-wrap gap-x-2.5 gap-y-0.5 text-[10.5px] text-slate-600">
+              <div className="mt-1.5 flex flex-wrap gap-x-2.5 gap-y-0.5 text-[10.5px] font-medium text-slate-600">
                 <span>{content.hero.location}</span>
-                <span>•</span>
+                <span className="text-slate-300">•</span>
                 <span>{personalInfo.phone}</span>
-                <span>•</span>
+                <span className="text-slate-300">•</span>
                 <span>{personalInfo.email}</span>
-                <span>•</span>
+                <span className="text-slate-300">•</span>
                 <span>github.com/1n1nJirath</span>
-                <span>•</span>
+                <span className="text-slate-300">•</span>
                 <span>linkedin.com/in/jirathkana</span>
               </div>
-            </div>
+            </header>
 
-            {/* Profile Summary */}
-            <div className="mt-2.5">
-              <h2 className="font-mono text-[10px] font-bold uppercase tracking-wider text-slate-500">
-                {cv.summaryTitle}
-              </h2>
-              <p className="mt-0.5 text-[11px] leading-snug text-slate-700">
-                {content.hero.subHeadline} {content.hero.positioningNote}
+            {/* Profile Summary + Key Highlights */}
+            <section className="mt-3">
+              <SectionHeading>{cv.summaryTitle}</SectionHeading>
+              <p className="mt-1.5 text-[11px] leading-[1.52] text-slate-700">
+                {cv.summaryText}
               </p>
-            </div>
+              <div className="mt-1.5 flex flex-wrap gap-1.5">
+                {cv.keyBadges.map((badge) => (
+                  <span
+                    key={badge}
+                    className="rounded border border-teal-200 bg-teal-50/70 px-2 py-0.5 text-[10px] font-semibold text-teal-900"
+                  >
+                    {badge}
+                  </span>
+                ))}
+              </div>
+            </section>
 
             {/* Education */}
-            <div className="mt-2.5">
-              <h2 className="font-mono text-[10px] font-bold uppercase tracking-wider text-slate-500">
-                {cv.educationTitle}
-              </h2>
-              <div className="mt-0.5 flex flex-wrap items-baseline justify-between gap-2">
+            <section className="mt-3">
+              <SectionHeading>{cv.educationTitle}</SectionHeading>
+              <div className="mt-1.5 flex flex-wrap items-baseline justify-between gap-2">
                 <p className="text-xs font-bold text-slate-900">
-                  {education.degree} —{' '}
-                  <span className="font-medium text-slate-700">
-                    {education.institution}
-                  </span>
+                  {education.degree}
                 </p>
-                <span className="font-mono text-[10.5px] text-slate-600">
+                <span className="font-mono text-[10.5px] font-semibold text-teal-800">
                   {education.graduated}
                 </span>
               </div>
-              <p className="mt-0.5 text-[10.5px] leading-snug text-slate-600">
-                <span className="font-semibold text-slate-700">
+              <p className="text-[11px] font-medium text-slate-700">
+                {education.institution}
+              </p>
+              <p className="mt-0.5 text-[10.5px] leading-[1.45] text-slate-600">
+                <span className="font-semibold text-slate-800">
                   {cv.courseworkPrefix}
                 </span>{' '}
                 {education.coursework.join(' • ')}
               </p>
-            </div>
+            </section>
 
             {/* Featured Systems & Case Studies */}
-            <div className="mt-2.5">
-              <h2 className="font-mono text-[10px] font-bold uppercase tracking-wider text-slate-500">
-                {cv.projectsTitle}
-              </h2>
-              <div className="mt-1 space-y-2">
-                {content.caseStudies.map((study) => (
+            <section className="mt-3">
+              <SectionHeading>{cv.projectsTitle}</SectionHeading>
+              <div className="mt-1.5 space-y-2.5">
+                {cv.structuredProjects.map((project) => (
                   <div
-                    key={study.id}
-                    className="border-l-2 border-teal-500/70 pl-2.5"
+                    key={project.id}
+                    className="border-l-2 border-slate-200 pl-2.5"
                   >
                     <div className="flex flex-wrap items-baseline justify-between gap-2">
-                      <h3 className="text-xs font-bold text-slate-900">
-                        {study.title}
+                      <h3 className="text-[11.5px] font-bold text-slate-900">
+                        {project.title}
                       </h3>
-                      <span className="font-mono text-[10px] text-slate-500">
-                        {study.period}
+                      <span className="font-mono text-[10px] font-medium text-slate-500">
+                        {project.period}
                       </span>
                     </div>
                     <p className="text-[10.5px] font-semibold text-[#0D9488]">
-                      {study.role} | {study.techStack.join(' • ')}
+                      {project.role}{' '}
+                      <span className="font-normal text-slate-400">|</span>{' '}
+                      <span className="font-mono text-[10px] font-medium text-slate-600">
+                        {project.stack}
+                      </span>
                     </p>
-                    <ul className="mt-0.5 list-disc space-y-0.5 pl-3.5 text-[10.5px] leading-snug text-slate-700">
-                      <li>
-                        <span className="font-semibold">{cv.solutionPrefix}</span>{' '}
-                        {study.solution}
-                      </li>
-                      <li>
-                        <span className="font-semibold">{cv.outcomesPrefix}</span>{' '}
-                        {study.outcomes}
-                      </li>
+                    <ul className="mt-1 list-disc space-y-0.5 pl-4 text-[11px] leading-[1.5] text-slate-700">
+                      {project.bullets.map((bullet) => (
+                        <li key={bullet.lead}>
+                          <span className="font-bold text-slate-900">
+                            {bullet.lead}:
+                          </span>{' '}
+                          {bullet.text}
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 ))}
               </div>
-            </div>
+            </section>
 
             {/* Leadership */}
-            <div className="mt-2.5">
-              <h2 className="font-mono text-[10px] font-bold uppercase tracking-wider text-slate-500">
-                {cv.leadershipTitle}
-              </h2>
-              <div className="mt-0.5 flex flex-wrap items-baseline justify-between gap-2">
-                <h3 className="text-xs font-bold text-slate-900">
+            <section className="mt-3">
+              <SectionHeading>{cv.leadershipTitle}</SectionHeading>
+              <div className="mt-1.5 flex flex-wrap items-baseline justify-between gap-2">
+                <h3 className="text-[11.5px] font-bold text-slate-900">
                   {leadership.role} —{' '}
                   <span className="font-medium text-slate-700">
                     {leadership.organization}
                   </span>
                 </h3>
-                <span className="font-mono text-[10px] text-slate-500">
+                <span className="font-mono text-[10px] font-medium text-slate-500">
                   {leadership.period}
                 </span>
               </div>
-              <ul className="mt-0.5 list-disc space-y-0.5 pl-3.5 text-[10.5px] leading-snug text-slate-700">
-                {leadership.achievements.map((item) => (
-                  <li key={item.title}>{item.detail}</li>
+              <ul className="mt-1 list-disc space-y-0.5 pl-4 text-[11px] leading-[1.5] text-slate-700">
+                {cv.structuredLeadership.map((item) => (
+                  <li key={item.lead}>
+                    <span className="font-bold text-slate-900">
+                      {item.lead}:
+                    </span>{' '}
+                    {item.text}
+                  </li>
                 ))}
               </ul>
-            </div>
+            </section>
 
-            {/* Skills */}
-            <div className="mt-2.5 border-t border-slate-200 pt-2">
-              <h2 className="font-mono text-[10px] font-bold uppercase tracking-wider text-slate-500">
-                {cv.skillsTitle}
-              </h2>
-              <div className="mt-1 space-y-0.5 text-[10.5px] leading-snug text-slate-700">
+            {/* Skills 3-Column Grid */}
+            <section className="mt-3">
+              <SectionHeading>{cv.skillsTitle}</SectionHeading>
+              <div className="mt-1.5 grid grid-cols-1 gap-2 sm:grid-cols-3 print:grid-cols-3">
                 {skillCategories.map((cat) => (
-                  <p key={cat.id}>
-                    <span className="font-bold text-slate-900">{cat.title}:</span>{' '}
-                    {cat.skills.join(' • ')}
-                  </p>
+                  <div
+                    key={cat.id}
+                    className="rounded-lg border border-slate-200 bg-slate-50/60 px-2.5 py-2"
+                  >
+                    <p className="text-[10.5px] font-bold text-slate-900">
+                      {cat.title}
+                    </p>
+                    <p className="mt-0.5 text-[10px] leading-[1.45] text-slate-700">
+                      {cat.skills.join(' • ')}
+                    </p>
+                  </div>
                 ))}
               </div>
-            </div>
+            </section>
           </div>
         </div>
       </div>

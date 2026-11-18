@@ -725,16 +725,85 @@ export const portfolioContent = {
     },
     cv: {
       titlePrefix: 'Curriculum Vitae',
-      subtitle: 'ATS-friendly executive layout • Save as PDF via Print dialog',
+      subtitle: '1-Page A4 ATS Executive Resume • Save as PDF via Print dialog',
       printBtn: 'Print / Save as PDF',
+      roleLine:
+        'System Analyst (SA) • IT Business Analyst (BA) • Project Coordinator • AI Workflow Solutions',
       summaryTitle: 'Executive Summary',
+      summaryText:
+        'Computer Science graduate from Chulalongkorn University specializing in translating business requirements and operational constraints into structured BRD/SRS specs, deterministic State Machines, and reliable 24/7 AI/API workflows.',
+      keyBadges: [
+        'B.Sc. Computer Science, Chula (2026)',
+        'BRD/SRS • State Machine • End-to-End UAT',
+        '5 Major Operational Projects Led',
+      ],
       educationTitle: 'Education',
       courseworkPrefix: 'Relevant Coursework:',
       projectsTitle: 'Featured System Analysis & Automation Projects',
-      problemPrefix: 'Problem:',
-      solutionPrefix: 'Solution:',
-      outcomesPrefix: 'Outcomes:',
+      structuredProjects: [
+        {
+          id: 'hornbill',
+          title: 'HornBill ERP System — Automated Accounting ERP Bot',
+          period: 'Aug 2026 – Present',
+          role: 'System Analyst & Workflow Architect',
+          stack: 'LINE Messaging API • Google Apps Script • Gemini API (OCR) • Google Workspace',
+          bullets: [
+            {
+              lead: 'State Machine & OCR Pipeline',
+              text: 'Designed a 7-step interactive State Machine via LINE Webhook integrated with Gemini API (OCR) to parse financial documents and route entries directly into Google Sheets ERP reports.',
+            },
+            {
+              lead: 'UAT & 24/7 Reliability',
+              text: 'Directed end-to-end UAT, resolved API rate-limiting bottlenecks with throttling queues, and implemented an Auto-Discovery protocol for uninterrupted 24/7 uptime.',
+            },
+          ],
+        },
+        {
+          id: 'monito',
+          title: 'Monito AnurakSciCU — Hybrid-Offline Matchmaking Web App',
+          period: 'May – Nov 2026',
+          role: 'System Designer & Developer',
+          stack: 'Python • Streamlit • Google Sheets API • openpyxl • PBKDF2',
+          bullets: [
+            {
+              lead: 'Hybrid-Offline & Graph Algorithm',
+              text: 'Architected Google Sheets API as a Headless CMS paired with automated Excel (openpyxl) fallback for zero-internet forest camps; modeled matching rules as a closed-loop Hamiltonian Cycle.',
+            },
+            {
+              lead: 'Security & Continuity',
+              text: 'Protected admin controls with PBKDF2 HMAC-SHA256 authentication, login rate-limiting, and automated pre-write sheet backups.',
+            },
+          ],
+        },
+        {
+          id: 'mystery',
+          title: 'Mystery of the Forest: Hidden Village — 2D Interactive Mystery Game (Senior CS Project)',
+          period: 'Aug 2025 – May 2026',
+          role: 'Core Systems & Narrative Designer',
+          stack: 'Unity • C# • Branching State Logic • Async Scene Pipeline',
+          bullets: [
+            {
+              lead: 'Logic Validation & Async Pipeline',
+              text: 'Designed branching narrative state logic with strict precondition validation to eliminate plot contradictions, backed by asynchronous scene loading and responsive UI.',
+            },
+          ],
+        },
+      ],
       leadershipTitle: 'Leadership & Operational Experience',
+      structuredLeadership: [
+        {
+          lead: 'Project Delivery (5 Major Projects)',
+          text: 'Directed cross-functional internal sub-teams across 5 major operational projects, managing timelines, task dependencies, crisis resolution, and continuity.',
+        },
+        {
+          lead: 'Stakeholder Coordination',
+          text: 'Aligned university boards, faculty, and external ecological experts to deliver the "Go Green Seminar: Wildlife Conservation Research" on schedule.',
+        },
+        {
+          lead: 'Outreach & PR Campaigns',
+          text: 'Led public relations and outreach campaigns to expand cross-faculty participation and member engagement.',
+        },
+      ],
       skillsTitle: 'Skills Matrix',
     },
   },
@@ -1448,17 +1517,86 @@ export const portfolioContent = {
       footerBuild: 'พัฒนาด้วย React + Tailwind CSS • รองรับสองภาษา (EN / TH)',
     },
     cv: {
-      titlePrefix: 'เรซูเม่ฉบับย่อ (Curriculum Vitae)',
-      subtitle: 'โครงสร้างมาตรฐาน ATS • กดพิมพ์เพื่อบันทึกเป็น PDF ได้ทันที',
+      titlePrefix: 'เรซูเม่ฉบับย่อ (1 หน้า A4)',
+      subtitle: 'จัดหน้าสำหรับภาษาไทยให้อ่านง่าย • กดพิมพ์เพื่อบันทึกเป็น PDF ได้ในหน้าเดียว',
       printBtn: 'พิมพ์ / บันทึกเป็น PDF',
+      roleLine:
+        'System Analyst (SA) • IT Business Analyst (BA) • Project Coordinator • AI Workflow Solutions',
       summaryTitle: 'สรุปคุณสมบัติ (Executive Summary)',
+      summaryText:
+        'บัณฑิตวิทยาการคอมพิวเตอร์ จุฬาลงกรณ์มหาวิทยาลัย เชี่ยวชาญการแปลงโจทย์ธุรกิจและข้อจำกัดหน้างานให้เป็นเอกสารสเปกระบบ (BRD/SRS), ผัง State Machine และระบบ AI/API Automation ที่เสถียรใช้งานได้จริง 24/7',
+      keyBadges: [
+        'วท.บ. วิทยาการคอมพิวเตอร์ จุฬาฯ (2026)',
+        'เชี่ยวชาญ BRD/SRS • State Machine • UAT',
+        'นำทีมบริหารสำเร็จ 5 โครงการหลัก',
+      ],
       educationTitle: 'การศึกษา (Education)',
       courseworkPrefix: 'รายวิชาสำคัญ:',
       projectsTitle: 'ผลงานด้านการวิเคราะห์ระบบและ Automation',
-      problemPrefix: 'ปัญหา:',
-      solutionPrefix: 'แนวทางแก้ไข:',
-      outcomesPrefix: 'ผลลัพธ์:',
-      leadershipTitle: 'ประสบการณ์ภาวะผู้นำและการปฏิบัติการ',
+      structuredProjects: [
+        {
+          id: 'hornbill',
+          title: 'HornBill ERP System — ระบบบอทบัญชี ERP อัตโนมัติบน LINE',
+          period: 'ส.ค. 2026 – ปัจจุบัน',
+          role: 'System Analyst & Workflow Architect',
+          stack: 'LINE Messaging API • Google Apps Script • Gemini API (OCR) • Google Workspace',
+          bullets: [
+            {
+              lead: 'ออกแบบระบบและ State Machine',
+              text: 'วางผัง Interactive State Machine 7 ขั้นตอนผ่าน LINE Webhook เชื่อมต่อ Gemini API (OCR) สกัดข้อมูลใบเสร็จ/ใบกำกับภาษี และส่งเข้า Google Sheets ERP อัตโนมัติ ลดความผิดพลาดจากการคีย์มือ',
+            },
+            {
+              lead: 'ความเสถียรและการทดสอบ UAT',
+              text: 'กำกับการทดสอบ End-to-End UAT แก้คอขวด API Rate-limiting ด้วยระบบคิว และสร้างโปรโตคอล Auto-Discovery เพื่อรับประกันระบบทำงานต่อเนื่อง 24/7',
+            },
+          ],
+        },
+        {
+          id: 'monito',
+          title: 'Monito AnurakSciCU — เว็บแอปจับคู่กิจกรรมแบบ Hybrid-Offline',
+          period: 'พ.ค. – พ.ย. 2026',
+          role: 'System Designer & Developer',
+          stack: 'Python • Streamlit • Google Sheets API • openpyxl • PBKDF2',
+          bullets: [
+            {
+              lead: 'สถาปัตยกรรม Hybrid-Offline & อัลกอริทึม',
+              text: 'ออกแบบใช้ Google Sheets API เป็น Headless CMS คู่กับไฟล์ Excel (openpyxl) สำหรับพื้นที่ป่าไร้สัญญาณอินเทอร์เน็ต พร้อมคิดค้นอัลกอริทึม Hamiltonian Cycle จับคู่วงปิดสมบูรณ์ รองรับกฎคู่ล็อก/คู่ห้ามจับโดยไม่มีคนตกหล่น',
+            },
+            {
+              lead: 'ความปลอดภัยและการสำรองข้อมูล',
+              text: 'ปกป้องสิทธิ์ผู้ดูแลด้วย PBKDF2 HMAC-SHA256, ระบบจำกัดความถี่การล็อกอิน (Rate-limiting) และ Auto-Backup สำรองชีตอัตโนมัติก่อนบันทึกทุกครั้ง',
+            },
+          ],
+        },
+        {
+          id: 'mystery',
+          title: 'Mystery of the Forest: Hidden Village — เกมสืบสวน 2D เชิงโต้ตอบ (Senior CS Project)',
+          period: 'ส.ค. 2025 – พ.ค. 2026',
+          role: 'Core Systems & Narrative Designer',
+          stack: 'Unity • C# • Branching State Logic • Async Scene Pipeline',
+          bullets: [
+            {
+              lead: 'ตรรกะระบบและโครงสร้างเนื้อเรื่อง',
+              text: 'ออกแบบ Branching Narrative State Machine และตัวตรวจสอบตรรกะ (Contradiction Validator) กันเนื้อเรื่องขัดแย้งเมื่อสำรวจเบาะแสต่างลำดับ พร้อมวาง Async Loading Pipeline ให้เปลี่ยนฉากลื่นไหลไม่ค้าง',
+            },
+          ],
+        },
+      ],
+      leadershipTitle: 'ประสบการณ์ภาวะผู้นำและการปฏิบัติการ (Leadership)',
+      structuredLeadership: [
+        {
+          lead: 'การบริหารโครงการ (5 โครงการหลัก)',
+          text: 'นำทีมย่อยข้ามสายงานวางแผน Timeline จัดสรรทรัพยากร แก้ปัญหาเฉพาะหน้า และดูแลความต่อเนื่องของงานจนสำเร็จครบทั้ง 5 โครงการ',
+        },
+        {
+          lead: 'การประสานงานผู้มีส่วนได้ส่วนเสีย',
+          text: 'ประสานงานผู้บริหารคณะ คณาจารย์ และนักวิจัยสัตว์ป่าภายนอก จัดงานสัมมนา "Go Green Seminar: Wildlife Conservation Research" สำเร็จตามเป้าหมาย',
+        },
+        {
+          lead: 'การสื่อสารและขยายการมีส่วนร่วม',
+          text: 'วางกลยุทธ์ประชาสัมพันธ์และแคมเปญเชิงรุกเพื่อเพิ่มการมีส่วนร่วมของสมาชิกและนิสิตข้ามคณะอย่างต่อเนื่อง',
+        },
+      ],
       skillsTitle: 'ทักษะความสามารถ (Skills Matrix)',
     },
   },
