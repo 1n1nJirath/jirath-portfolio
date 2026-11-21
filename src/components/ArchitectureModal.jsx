@@ -5,6 +5,7 @@ import {
   ExternalLink,
   Gamepad2,
   Github,
+  Globe,
   Layers,
   ShieldCheck,
   Workflow,
@@ -226,6 +227,18 @@ export default function ArchitectureModal({ studyId, onClose }) {
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
+            {study.liveUrl && (
+              <a
+                href={study.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-lg bg-[#0D9488] px-3.5 py-2 text-xs font-semibold text-white transition-colors hover:bg-[#0F766E]"
+              >
+                <Globe className="h-3.5 w-3.5" />
+                <span>{ui.openLiveAppBtn}</span>
+                <ExternalLink className="h-3 w-3 opacity-85" />
+              </a>
+            )}
             {study.itchUrl && (
               <a
                 href={study.itchUrl}

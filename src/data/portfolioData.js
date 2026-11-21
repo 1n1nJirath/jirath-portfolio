@@ -12,6 +12,8 @@ export const personalInfo = {
   mysteryRepoUrl: 'https://github.com/1n1nJirath/Mystery-of-the-Forest-Hidden-Village',
   mysteryReleasesUrl: 'https://github.com/1n1nJirath/Mystery-of-the-Forest-Hidden-Village/releases',
   mysteryItchUrl: 'https://1n1ndaggfoo.itch.io/mystery-of-the-forest-hidden-village',
+  krampusLiveUrl: 'https://krampus-eve-party.vercel.app',
+  krampusRepoUrl: 'https://github.com/1n1nJirath/krampus-eve-party',
 }
 
 export const portfolioContent = {
@@ -134,9 +136,10 @@ export const portfolioContent = {
       title: 'System Architectures & Operational Case Studies',
       subtitle:
         'Each project is structured around business constraints, deterministic state logic, fallback safety, and measurable reliability. Hover nodes for quick logic tooltips or click any block to inspect.',
-      badge: '3 Interactive System Blueprints',
+      badge: '4 Interactive System Blueprints',
       rolePrefix: 'Role',
       viewArchitectureBtn: 'View System Architecture',
+      openLiveAppBtn: 'Open Live Web App',
       playItchBtn: 'Play Live Demo on itch.io',
       viewGithubBtn: 'View Source & Architecture',
       viewReleasesBtn: 'Playable Build (v1.0.0)',
@@ -599,6 +602,149 @@ export const portfolioContent = {
           },
         ],
       },
+      {
+        id: 'krampus',
+        code: 'CASE_04',
+        title: 'The Krampus Eve — Host-Authoritative Realtime Party Game Platform',
+        period: 'Nov 2026',
+        role: 'System Architect, QA Lead & Full-Stack Developer',
+        category: 'Realtime Multi-Screen Sync & Pure Logic QA',
+        techStack: [
+          'React',
+          'TypeScript',
+          'Tailwind CSS',
+          'Supabase Realtime',
+          'Vitest (47/47 Tests)',
+          'Vercel',
+        ],
+        liveUrl: 'https://krampus-eve-party.vercel.app',
+        githubUrl: 'https://github.com/1n1nJirath/krampus-eve-party',
+        problem:
+          'Live-action university party events (4 teams of 6–10 players) required a sub-500ms realtime multi-screen game show system (Projector, GM Control Deck, and 4 Team Smartphones) without state overwrites, timer drift, double-click race conditions, or complex logins.',
+        solution:
+          'Architected a Host-Authoritative Realtime System separating /admin (Single Source of Truth broadcast control deck), /display (Read-Only 16:9 projector), and /play (4 mobile controllers sending idempotent PLAYER_ACTION packets with actionId deduplication). Implemented monotonic stateVersion guards, timestamp-based timerEndAt countdowns, and a 4-stage game economy engine.',
+        outcomes:
+          'Decoupled all 4 game scoring engines into 100% Pure Logic modules backed by 47/47 passing Vitest unit tests across 8 test suites, zero-scroll broadcast UX, and live production deployment on Vercel.',
+        highlights: [
+          { label: 'Sync Model', value: 'Host-Authoritative (<500ms)' },
+          { label: 'QA Coverage', value: '47/47 Vitest Unit Tests' },
+          { label: 'Multi-Screen', value: '/admin • /display • /play' },
+        ],
+        diagramType: 'krampus',
+        diagramTitle: 'Host-Authoritative Realtime Multi-Screen Sync Architecture',
+        diagramSubtitle: 'Single Source of Truth Broadcast Deck, Drift-Free Timers & Idempotent Mobile Controllers',
+        diagramStatus: '47/47 TESTS PASSING',
+        qaBanner: {
+          badge: 'QA AUTOMATION & REALTIME SYNC GUARDRAILS',
+          title: 'Zero-Overwrite Sync + 100% Pure Logic Test Coverage',
+          steps: [
+            '1. Monotonic stateVersion rejects stale packets',
+            '2. Optimistic Lock + actionId deduplication + auto-retry',
+            '3. 8 Vitest Suites (47/47 Pass): Economy, Sync & Standby',
+          ],
+        },
+        nodes: [
+          {
+            id: 'KR1',
+            track: 'host',
+            status: 'CONTROL DECK',
+            title: 'GM Broadcast Control Deck (/admin)',
+            shortLabel: 'GM Broadcast Control Deck (/admin)',
+            actor: 'Main Game Master (Single Source of Truth)',
+            trigger: 'GM drives 4-stage game flow via zero-scroll Step 1-2-3-4 control deck.',
+            logic:
+              'Sole writer of authoritative game state: manages Standby gatekeeping, round timers, reveals, and live coin economy transactions.',
+            fallback:
+              'SafeActionButton throttling and standby gates prevent accidental double-triggers or premature timer starts.',
+          },
+          {
+            id: 'KR2',
+            track: 'host',
+            status: 'PURE LOGIC',
+            title: 'Pure Logic & State Engine (stateVersion + timerEndAt)',
+            shortLabel: 'Pure Logic & State Engine (stateVersion + timerEndAt)',
+            actor: 'Deterministic Scoring & Sync Kernel',
+            trigger: 'Host command or incoming PLAYER_ACTION packet processed.',
+            logic:
+              'Executes decoupled pure scoring modules across all 4 games, increments monotonic stateVersion, and stamps absolute timerEndAt epochs.',
+            fallback:
+              'Stale packets with lower stateVersion are dropped cleanly; 47/47 Vitest unit tests verify every edge case.',
+          },
+          {
+            id: 'KR3',
+            track: 'host',
+            status: 'REALTIME BUS',
+            title: 'Triple-Layer Realtime Sync (Supabase / SSE / Broadcast)',
+            shortLabel: 'Triple-Layer Sync (Supabase Realtime / SSE)',
+            actor: 'Transport & Broadcast Layer',
+            trigger: 'Authoritative STATE_SYNC emitted on every state transition.',
+            logic:
+              'Pushes atomic state updates to all connected screens in <500ms via Supabase Realtime Broadcast on Vercel or Local SSE on LAN.',
+            fallback:
+              'Timestamp-based timerEndAt eliminates per-second network broadcasts and keeps countdowns drift-free across devices.',
+          },
+          {
+            id: 'KR4',
+            track: 'client',
+            status: 'READ-ONLY',
+            title: 'Projector Display (/display — Read-Only)',
+            shortLabel: 'Projector Display (/display — Read-Only)',
+            actor: '16:9 Audience Screen',
+            trigger: 'Receives STATE_SYNC broadcasts from Host.',
+            logic:
+              'Renders live leaderboard (Nice vs Naughty List), Mansion World Map, reveal animations, and Web Audio API synthesized SFX.',
+            fallback:
+              'Strictly read-only architecture guarantees the display screen can never mutate or overwrite game state.',
+          },
+          {
+            id: 'KR5',
+            track: 'client',
+            status: 'IDEMPOTENT',
+            title: '4 Team Mobile Controllers (/play)',
+            shortLabel: '4 Team Mobile Controllers (/play)',
+            actor: '4 Team GMs (Smartphones)',
+            trigger: 'Team submits choice, year guess, buzzer press, or secret wager.',
+            logic:
+              'Emits PLAYER_ACTION tagged with unique actionId; uses optimistic UI locking while awaiting Host acknowledgment.',
+            fallback:
+              'Built-in auto-retry recovers dropped mobile packets without duplicating submissions or coins.',
+          },
+        ],
+        specs: [
+          {
+            layer: 'Host-Authoritative Sync Contract',
+            contract: '/admin emits STATE_SYNC(stateVersion, timerEndAt) | /play emits PLAYER_ACTION(actionId, teamId)',
+            guarantee: 'Eliminates split-brain state overwrites across 6 concurrent devices',
+          },
+          {
+            layer: 'Pure Logic & Economy Kernel',
+            contract: 'Immutable State + Action -> Deterministic Next State (doorsLogic, chronoLogic, toyFactoryLogic, lastManLogic)',
+            guarantee: '47/47 passing Vitest unit tests across 8 suites',
+          },
+          {
+            layer: 'Audio & UX Resilience',
+            contract: 'Synthesized Web Audio API SFX + SafeActionButton Anti-Double-Click Guard',
+            guarantee: 'Zero external MP3 dependency & zero phantom multi-fire clicks',
+          },
+        ],
+        risks: [
+          {
+            risk: 'Concurrent State Overwrites Between Host & 4 Mobile Clients',
+            impact: 'Lost team answers or reverted coin balances mid-round',
+            mitigation: 'Enforced Host-Authoritative model (/admin only writes STATE_SYNC; /play only sends PLAYER_ACTION with monotonic stateVersion).',
+          },
+          {
+            risk: 'Countdown Timer Stutter or Drift on Mobile Networks',
+            impact: 'Unfair timeout cutoffs across teams on cellular connections',
+            mitigation: 'Replaced tick-by-tick broadcasts with absolute server timerEndAt epoch synced locally.',
+          },
+          {
+            risk: 'Double-Click / Phantom Multi-Fire During High-Pressure Rounds',
+            impact: 'Duplicate coin deductions or accidental round skips',
+            mitigation: 'Implemented SafeActionButton debouncing, actionId deduplication, and Standby gatekeeping.',
+          },
+        ],
+      },
     ],
     leadership: {
       eyebrow: '03 // LEADERSHIP & OPERATIONAL EXPERIENCE',
@@ -788,6 +934,19 @@ export const portfolioContent = {
             },
           ],
         },
+        {
+          id: 'krampus',
+          title: 'The Krampus Eve — Host-Authoritative Realtime Party Game Platform',
+          period: 'Nov 2026',
+          role: 'System Architect, QA Lead & Full-Stack Developer',
+          stack: 'React • TypeScript • Supabase Realtime • Vitest (47/47 Tests) • Vercel',
+          bullets: [
+            {
+              lead: 'Multi-Screen Sync & Pure Logic QA',
+              text: 'Architected /admin (Single Source of Truth), /display (Read-Only), and /play mobile controllers with stateVersion guards, timerEndAt countdowns, actionId deduplication, and 47/47 passing Vitest unit tests.',
+            },
+          ],
+        },
       ],
       leadershipTitle: 'Leadership & Operational Experience',
       structuredLeadership: [
@@ -927,9 +1086,10 @@ export const portfolioContent = {
       title: 'กรณีศึกษาด้านการวิเคราะห์และออกแบบสถาปัตยกรรมระบบ',
       subtitle:
         'แต่ละโครงการออกแบบโดยยึดข้อจำกัดทางธุรกิจ (Constraints), ตรรกะ State Machine, แผนสำรอง (Fallback) และผลลัพธ์ที่วัดได้ สามารถนำเมาส์วางบน Node เพื่อดู Tooltip หรือคลิกเพื่อตรวจสอบรายละเอียดเชิงลึก',
-      badge: '3 สถาปัตยกรรมระบบแบบ Interactive',
+      badge: '4 สถาปัตยกรรมระบบแบบ Interactive',
       rolePrefix: 'บทบาท',
       viewArchitectureBtn: 'ดูสถาปัตยกรรมระบบเชิงลึก',
+      openLiveAppBtn: 'เปิดดูเว็บใช้งานจริง (Live)',
       playItchBtn: 'ทดลองเล่นเกมจริง (itch.io)',
       viewGithubBtn: 'ดูซอร์สโค้ดและสถาปัตยกรรม (GitHub)',
       viewReleasesBtn: 'ดาวน์โหลดไฟล์เล่นเกม (v1.0.0)',
@@ -1392,6 +1552,149 @@ export const portfolioContent = {
           },
         ],
       },
+      {
+        id: 'krampus',
+        code: 'CASE_04',
+        title: 'The Krampus Eve — เว็บแอปเกมโชว์ปาร์ตี้แบบ Realtime หลายหน้าจอ',
+        period: 'พ.ย. 2026',
+        role: 'System Architect, QA Lead & Full-Stack Developer',
+        category: 'Realtime Multi-Screen Sync & Pure Logic QA',
+        techStack: [
+          'React',
+          'TypeScript',
+          'Tailwind CSS',
+          'Supabase Realtime',
+          'Vitest (47/47 Tests)',
+          'Vercel',
+        ],
+        liveUrl: 'https://krampus-eve-party.vercel.app',
+        githubUrl: 'https://github.com/1n1nJirath/krampus-eve-party',
+        problem:
+          'กิจกรรมปาร์ตี้สดระดับมหาวิทยาลัย (4 ทีม ทีมละ 6–10 คน) ต้องการระบบเกมโชว์หลายหน้าจอที่ซิงก์เร็วระดับ <500ms (จอโปรเจกเตอร์, แผงคุม GM และมือถือตัวแทน 4 ทีม) โดยไม่เกิดปัญหาแย่งกันเขียนทับ State, ตัวจับเวลากระตุก หรือการกดเบิ้ล',
+        solution:
+          'ออกแบบสถาปัตยกรรม Host-Authoritative Realtime แยกบทบาทชัดเจนระหว่าง /admin (แผงควบคุมหลักแบบ Broadcast Deck), /display (จอโปรเจกเตอร์แบบ Read-Only) และ /play (มือถือ 4 ทีมส่งคำสั่ง PLAYER_ACTION พร้อม actionId กันส่งซ้ำ) ควบคุมด้วย stateVersion, ตัวจับเวลาอิง timerEndAt และระบบเศรษฐกิจเกม 4 ด่าน',
+        outcomes:
+          'แยกตรรกะคำนวณคะแนนทั้ง 4 เกมเป็น Pure Logic 100% พร้อมชุด Unit Test ผ่านครบ 47/47 เคส (8 test suites) ด้วย Vitest และ Deploy ใช้งานจริงบน Vercel Production',
+        highlights: [
+          { label: 'รูปแบบซิงก์', value: 'Host-Authoritative (<500ms)' },
+          { label: 'การทดสอบ QA', value: 'Vitest 47/47 Tests Pass' },
+          { label: 'ระบบหน้าจอ', value: '/admin • /display • /play' },
+        ],
+        diagramType: 'krampus',
+        diagramTitle: 'Host-Authoritative Realtime Multi-Screen Sync Architecture',
+        diagramSubtitle: 'สถาปัตยกรรมซิงก์หลายหน้าจอแบบ Host เป็นศูนย์กลาง พร้อม Pure Logic QA 47/47 เคส',
+        diagramStatus: '47/47 TESTS PASSING',
+        qaBanner: {
+          badge: 'QA AUTOMATION & REALTIME SYNC GUARDRAILS',
+          title: 'ป้องกันการเขียนทับ State + ทดสอบตรรกะ Pure Logic ครบ 100%',
+          steps: [
+            '1. Monotonic stateVersion ปฏิเสธแพ็กเก็ตเก่าอัตโนมัติ',
+            '2. Optimistic Lock + actionId กันกดเบิ้ล + Auto-Retry',
+            '3. Vitest 8 ชุด (ผ่าน 47/47): คะแนน, ซิงก์ และ Standby Gate',
+          ],
+        },
+        nodes: [
+          {
+            id: 'KR1',
+            track: 'host',
+            status: 'CONTROL DECK',
+            title: 'GM Broadcast Control Deck (/admin)',
+            shortLabel: 'แผงควบคุม GM (/admin)',
+            actor: 'Main Game Master (Single Source of Truth)',
+            trigger: 'GM คุมเกมทั้ง 4 ด่านผ่านหน้าจอ Broadcast Deck แบบไม่ต้องเลื่อน (Step 1-2-3-4)',
+            logic:
+              'เป็นผู้เขียน State หลักเพียงผู้เดียว ควบคุม Standby Gatekeeping, ตัวจับเวลา, การเฉลย และระบบบวก/ลบเหรียญ',
+            fallback:
+              'มี SafeActionButton และ Standby Gate ป้องกันการกดปุ่มเบิ้ลหรือเริ่มเวลาพลาดก่อนพร้อม',
+          },
+          {
+            id: 'KR2',
+            track: 'host',
+            status: 'PURE LOGIC',
+            title: 'Pure Logic & State Engine (stateVersion + timerEndAt)',
+            shortLabel: 'Pure Logic Engine (stateVersion + timerEndAt)',
+            actor: 'Deterministic Scoring & Sync Kernel',
+            trigger: 'รับคำสั่งจาก GM หรือ PLAYER_ACTION จากมือถือผู้เล่น',
+            logic:
+              'คำนวณคะแนนทั้ง 4 เกมผ่าน Pure Functions เพิ่มเลข stateVersion ทุกครั้ง และคำนวณเวลาสิ้นสุดด้วย timerEndAt',
+            fallback:
+              'ทิ้งแพ็กเก็ตที่ stateVersion ต่ำกว่าอัตโนมัติ และมี Vitest 47/47 เทสต์กำกับทุกเงื่อนไขคะแนน',
+          },
+          {
+            id: 'KR3',
+            track: 'host',
+            status: 'REALTIME BUS',
+            title: 'Triple-Layer Realtime Sync (Supabase / SSE / Broadcast)',
+            shortLabel: 'Triple-Layer Sync (Supabase Realtime / SSE)',
+            actor: 'Transport & Broadcast Layer',
+            trigger: 'กระจาย STATE_SYNC ทันทีเมื่อสถานะเกมเปลี่ยน',
+            logic:
+              'ซิงก์ข้อมูลไปยังทุกอุปกรณ์ภายใน <500ms ผ่าน Supabase Realtime Broadcast บน Vercel หรือ Local SSE บนวง LAN',
+            fallback:
+              'ใช้ timerEndAt แทนการยิง Broadcast ทุกวินาที ช่วยลดโหลดเครือข่ายและไม่ให้เวลากระตุก',
+          },
+          {
+            id: 'KR4',
+            track: 'client',
+            status: 'READ-ONLY',
+            title: 'Projector Display (/display — Read-Only)',
+            shortLabel: 'จอโปรเจกเตอร์ (/display — Read-Only)',
+            actor: 'หน้าจอแสดงผล 16:9 สำหรับผู้เล่น',
+            trigger: 'รับสัญญาณ STATE_SYNC จากฝั่ง Host',
+            logic:
+              'แสดงตารางคะแนน (Nice vs Naughty List), แผนที่คฤหาสน์, เฉลยคำตอบ และเอฟเฟกต์เสียง Web Audio API',
+            fallback:
+              'ทำงานแบบ Read-Only 100% จึงไม่มียิงคำสั่งแก้ State หรือขัดจังหวะฝั่งควบคุม',
+          },
+          {
+            id: 'KR5',
+            track: 'client',
+            status: 'IDEMPOTENT',
+            title: '4 Team Mobile Controllers (/play)',
+            shortLabel: 'มือถือ GM ประจำ 4 ทีม (/play)',
+            actor: 'สมาร์ตโฟนตัวแทน 4 ทีม',
+            trigger: 'ส่งคำตอบตัวเลือก, ปี ค.ศ., กด Buzzer หรือวางเดิมพันลับ',
+            logic:
+              'ส่ง PLAYER_ACTION แนบ actionId เฉพาะตัว พร้อมล็อกปุ่มแบบ Optimistic Lock ระหว่างรอ Host ยืนยัน',
+            fallback:
+              'มีระบบ Auto-Retry ส่งซ้ำอัตโนมัติเมื่อเน็ตมือถือสะดุดโดยไม่ทำให้คะแนนหรือคำตอบซ้ำซ้อน',
+          },
+        ],
+        specs: [
+          {
+            layer: 'Host-Authoritative Sync Contract',
+            contract: '/admin emits STATE_SYNC(stateVersion, timerEndAt) | /play emits PLAYER_ACTION(actionId, teamId)',
+            guarantee: 'หมดปัญหาการแย่งกันเขียนทับ State ข้าม 6 อุปกรณ์ที่เปิดพร้อมกัน',
+          },
+          {
+            layer: 'Pure Logic & Economy Kernel',
+            contract: 'Immutable State + Action -> Deterministic Next State (doorsLogic, chronoLogic, toyFactoryLogic, lastManLogic)',
+            guarantee: 'ผ่าน Unit Test 47/47 เคสครบทั้ง 8 Test Suites บน Vitest',
+          },
+          {
+            layer: 'Audio & UX Resilience',
+            contract: 'Synthesized Web Audio API SFX + SafeActionButton Anti-Double-Click Guard',
+            guarantee: 'เสียงทำงานได้ทันทีไม่ต้องโหลดไฟล์ MP3 และป้องกันการกดเบิ้ล',
+          },
+        ],
+        risks: [
+          {
+            risk: 'Host และมือถือ 4 เครื่องเขียนทับ State ชนกันพร้อมกัน',
+            impact: 'คำตอบทีมหายหรือยอดเหรียญเด้งย้อนกลับกลางรอบ',
+            mitigation: 'วางสถาปัตยกรรม Host-Authoritative (/admin เขียน STATE_SYNC เท่านั้น; /play ส่งเฉพาะ PLAYER_ACTION พร้อม stateVersion)',
+          },
+          {
+            risk: 'ตัวนับเวลาถอยหลังกระตุกหรือคลาดเคลื่อนบนเน็ตมือถือ',
+            impact: 'เกิดความไม่ยุติธรรมเรื่องเวลาหมดไม่พร้อมกัน',
+            mitigation: 'เปลี่ยนจากการส่ง Broadcast ทุกวินาทีมาใช้ Absolute Timestamp (timerEndAt) คำนวณเวลาที่เครื่องปลายทาง',
+          },
+          {
+            risk: 'การกดปุ่มซ้ำ (Double-Click / Phantom Multi-Fire) ช่วงกดดัน',
+            impact: 'หักเหรียญซ้ำหรือข้ามรอบเกมโดยไม่ตั้งใจ',
+            mitigation: 'เพิ่ม SafeActionButton Debounce, actionId Deduplication และ Standby Gatekeeping',
+          },
+        ],
+      },
     ],
     leadership: {
       eyebrow: '03 // LEADERSHIP & OPERATIONAL EXPERIENCE',
@@ -1578,6 +1881,19 @@ export const portfolioContent = {
             {
               lead: 'ตรรกะระบบและโครงสร้างเนื้อเรื่อง',
               text: 'ออกแบบ Branching Narrative State Machine และตัวตรวจสอบตรรกะ (Contradiction Validator) กันเนื้อเรื่องขัดแย้งเมื่อสำรวจเบาะแสต่างลำดับ พร้อมวาง Async Loading Pipeline ให้เปลี่ยนฉากลื่นไหลไม่ค้าง',
+            },
+          ],
+        },
+        {
+          id: 'krampus',
+          title: 'The Krampus Eve — เว็บแอปเกมโชว์ปาร์ตี้แบบ Realtime หลายหน้าจอ',
+          period: 'พ.ย. 2026',
+          role: 'System Architect, QA Lead & Full-Stack Developer',
+          stack: 'React • TypeScript • Supabase Realtime • Vitest (47/47 Tests) • Vercel',
+          bullets: [
+            {
+              lead: 'สถาปัตยกรรมซิงก์และ Pure Logic QA',
+              text: 'ออกแบบระบบ Host-Authoritative แยกหน้าจอ /admin, /display (Read-Only) และมือถือ /play คุมด้วย stateVersion, timerEndAt, actionId กันกดเบิ้ล พร้อมชุดทดสอบ Vitest ผ่านครบ 47/47 เคส',
             },
           ],
         },

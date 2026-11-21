@@ -13,8 +13,11 @@ import {
   Info,
   Lock,
   MessageSquare,
+  Monitor,
+  Radio,
   RefreshCw,
   ShieldAlert,
+  Smartphone,
   Sparkles,
   WifiOff,
 } from 'lucide-react'
@@ -400,6 +403,111 @@ function MysteryArchitecture({ study, selectedId, onSelect }) {
   )
 }
 
+function KrampusArchitecture({ study, selectedId, onSelect }) {
+  const hostNodes = study.nodes.filter((n) => n.track === 'host')
+  const clientNodes = study.nodes.filter((n) => n.track === 'client')
+
+  return (
+    <div className="space-y-3">
+      {/* Control Plane: Host-Authoritative Pipeline */}
+      <div className="rounded-xl border border-teal-200 bg-teal-50/35 p-3">
+        <div className="mb-2.5 flex items-center justify-between gap-2">
+          <span className="inline-flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-wider text-teal-800">
+            <Radio className="h-3.5 w-3.5 text-[#0D9488]" />
+            HOST-AUTHORITATIVE CONTROL PLANE (SINGLE SOURCE OF TRUTH)
+          </span>
+          <StatusPill status="STATE_SYNC" tone="teal" />
+        </div>
+        <div className="grid grid-cols-1 items-stretch gap-2 lg:grid-cols-3">
+          {hostNodes.map((node, index) => (
+            <div key={node.id} className="flex items-center gap-2">
+              <InteractiveNodeCard
+                node={node}
+                isSelected={selectedId === node.id}
+                onSelect={onSelect}
+                tone={node.id === 'KR2' ? 'emerald' : 'teal'}
+                extraBadge={
+                  node.id === 'KR2' ? (
+                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
+                  ) : node.id === 'KR3' ? (
+                    <Radio className="h-3.5 w-3.5 text-teal-600" />
+                  ) : null
+                }
+              />
+              {index < hostNodes.length - 1 && (
+                <ArrowRight className="hidden h-4 w-4 shrink-0 text-[#0D9488] lg:block" />
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Client Plane: Read-Only Display & Idempotent Mobile Controllers */}
+      <div className="grid gap-3 sm:grid-cols-2">
+        {clientNodes.map((node) => (
+          <div
+            key={node.id}
+            className={`rounded-xl border p-3 ${
+              node.id === 'KR4'
+                ? 'border-slate-200 bg-slate-100/60'
+                : 'border-amber-200 bg-amber-50/40'
+            }`}
+          >
+            <div className="mb-2 flex items-center justify-between gap-2">
+              <span className="inline-flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-wider text-slate-700">
+                {node.id === 'KR4' ? (
+                  <Monitor className="h-3.5 w-3.5 text-slate-600" />
+                ) : (
+                  <Smartphone className="h-3.5 w-3.5 text-amber-700" />
+                )}
+                {node.id === 'KR4' ? 'SUBSCRIBER ONLY (NO WRITES)' : 'PLAYER_ACTION + AUTO-RETRY'}
+              </span>
+              <StatusPill
+                status={node.id === 'KR4' ? 'READ-ONLY' : '4 PHONES'}
+                tone={node.id === 'KR4' ? 'slate' : 'amber'}
+              />
+            </div>
+            <InteractiveNodeCard
+              node={node}
+              isSelected={selectedId === node.id}
+              onSelect={onSelect}
+              tone={node.id === 'KR4' ? 'slate' : 'amber'}
+            />
+          </div>
+        ))}
+      </div>
+
+      {/* QA Automation & Sync Integrity Banner */}
+      {study.qaBanner && (
+        <div className="rounded-xl border-2 border-dashed border-emerald-300 bg-emerald-50/60 p-3.5">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <span className="inline-flex items-center gap-1.5 rounded-md bg-emerald-100 px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-emerald-900">
+              <CheckCircle2 className="h-3 w-3" />
+              {study.qaBanner.badge}
+            </span>
+            <span className="font-mono text-[10px] font-semibold text-emerald-800">
+              Vitest Pure Logic Suite • Zero Regression
+            </span>
+          </div>
+          <p className="mt-2 text-xs font-bold text-slate-900">
+            {study.qaBanner.title}
+          </p>
+          <div className="mt-2 grid gap-2 sm:grid-cols-3">
+            {study.qaBanner.steps.map((step) => (
+              <div
+                key={step}
+                className="rounded-lg border border-emerald-200 bg-white px-2.5 py-2 font-mono text-[11px] font-medium text-slate-800"
+              >
+                {step}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function SystemDiagram({ study, compact = false }) {
   const { lang } = useLanguage()
   const ui = portfolioContent[lang].caseStudiesSection
@@ -460,6 +568,13 @@ export default function SystemDiagram({ study, compact = false }) {
       )}
       {study.diagramType === 'mystery' && (
         <MysteryArchitecture
+          study={study}
+          selectedId={selectedId}
+          onSelect={handleSelect}
+        />
+      )}
+      {study.diagramType === 'krampus' && (
+        <KrampusArchitecture
           study={study}
           selectedId={selectedId}
           onSelect={handleSelect}

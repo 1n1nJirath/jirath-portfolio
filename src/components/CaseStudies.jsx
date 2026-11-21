@@ -7,6 +7,7 @@ import {
   ExternalLink,
   Gamepad2,
   Github,
+  Globe,
   Maximize2,
   Workflow,
 } from 'lucide-react'
@@ -73,6 +74,19 @@ export default function CaseStudies({ onSelectStudy }) {
 
                 {/* Primary & Secondary Action Buttons */}
                 <div className="flex flex-wrap items-center gap-2.5">
+                  {study.liveUrl && (
+                    <a
+                      href={study.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-[#0D9488] px-4 py-2.5 text-xs font-semibold text-white shadow-subtle transition-colors hover:bg-[#0F766E] sm:text-sm"
+                    >
+                      <Globe className="h-4 w-4" />
+                      <span>{section.openLiveAppBtn}</span>
+                      <ExternalLink className="h-3.5 w-3.5 opacity-85" />
+                    </a>
+                  )}
+
                   {study.itchUrl && (
                     <a
                       href={study.itchUrl}
@@ -103,7 +117,7 @@ export default function CaseStudies({ onSelectStudy }) {
                     type="button"
                     onClick={() => onSelectStudy(study.id)}
                     className={`inline-flex shrink-0 items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-xs font-semibold shadow-subtle transition-colors sm:text-sm ${
-                      study.itchUrl
+                      study.itchUrl || study.liveUrl
                         ? 'border border-slate-300 bg-[#0F172A] text-white hover:bg-slate-800'
                         : 'bg-[#0D9488] text-white hover:bg-[#0F766E]'
                     }`}
